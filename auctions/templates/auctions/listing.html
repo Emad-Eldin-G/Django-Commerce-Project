@@ -1,0 +1,71 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+
+{% block title %} {{Title}} {% endblock %}
+
+{% block body %}
+
+
+<div>
+
+    <h1>{{Title}}</h1>
+
+    <h2>{{Price}} USD</h2>
+    <p>{{Detials}}</p>
+
+    {% if Category %}
+    <h4>Category: {{Category}}</h4>
+    {% else %}
+    <h2>Category: Not Defined</h2>
+    {% endif %}
+
+
+    {% if Owner %}
+    <p>Owner: {{Owner}}</p>
+    {% else %}
+    <p>Owner: Anonymous</p>
+    {% endif %}
+
+</div>
+
+{% if user.is_authenticated %}
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Bid" name="Bid">
+        <h5>Current Bid: {{Current_Bid}}</h5>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Add WishList" name="Wishlist">
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Comment" name="Comment">
+    </form>
+
+{% else %}
+
+    <small>*Sign in to add Wish List items - Bids - Comments</small>
+
+{% endif %}
+
+
+{% for comment in Comments %}
+<div>
+    <ul>
+        <div>
+        <p>Owner: {{Commenter}}</p>
+        <p>{{comment}}</p>
+        </div>
+    </ul>
+</div>
+{% endfor %}
+
+
+
+{% endblock %}
+

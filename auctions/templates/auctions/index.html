@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2> 
+
+    {% for listing in All_Listings %}
+
+        <ul>
+            <a href="{% url 'commerce:listing' listing %}"> <li> <h3>{{ listing }}</h3> </li> </a>
+        </ul>
+
+    {% endfor %}
+
+
+{% endblock %}

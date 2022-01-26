@@ -1,0 +1,27 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+
+{% block title %} {{User}} WishList {% endblock %}
+
+{% block body %}
+
+
+<div>
+
+    <div>
+    <h1>My WishList</h1>
+    </div>
+
+    <div>
+        {% for listing in Listings %}
+        <ul>
+            <a href="{% url 'commerce:listing' listing.Listing %}"> <li>{{ listing.Listing }}</li> </a>
+        </ul>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
+

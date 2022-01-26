@@ -1,0 +1,60 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+
+{% block title %} 
+New Listing 
+{% endblock %}
+
+{% block body %}
+
+<form action="{% url 'commerce:New' %}" method="POST">
+
+    {% csrf_token %}
+
+    <div>
+        <label for="">User:</label>
+        <input type="text" name="User" value="{{ user.username }}" readonly>
+    </div>
+
+    <div>
+        <label for="">Title:</label>
+        <input type="text" name="Title">
+    </div>
+
+    <div>
+
+        <div>
+        <label for="">Details:</label>
+        </div>
+
+        <textarea style="resize: none;" name="Details" cols="30" rows="10"></textarea>
+    </div>
+
+    <div>
+        <label for="">Price:</label>
+        <input type="number" name="Price" step="0.25">
+    </div>
+
+    <div>
+        <div>
+        <label for="">Category</label>
+        </div>
+        <select name="Category" multiple=True>
+            <option value="Tech">Tech</option>
+            <option value="House">House</option>
+            <option value="Kitchen">Kitchen</option>
+            <option value="Sport">Sport</option>
+        </select>
+    </div>
+
+    
+
+    <div>
+      <input type="submit">
+    </div>
+
+</form>
+
+{% endblock %}
+
+
