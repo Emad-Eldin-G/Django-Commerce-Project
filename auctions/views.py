@@ -85,6 +85,7 @@ def register(request):
 def Listing_Page(request, listing):
     listingq = Listing.objects.get(Title=listing)
     userq = User.objects.get(username=request.user)
+    bidq = Bid.objects.filter(Listing=listingq)
 
     Title = listingq.Title
     Details = listingq.Details
@@ -100,9 +101,11 @@ def Listing_Page(request, listing):
 
     if request.method == 'POST':
         if "Bid" in request.POST:
-            wishlist = Wishlist(User=userq, Listing=listingq)
-            wishlist.save()
-            return render(request, "auctions/Success_wish.html")
+            New_Bid = Bid(Listing=listingq, Previous_Bid=Price, Current_Bid=request.POST, Active=True)
+            New_Bid.save()
+            current = bidq.Current_Bid
+            New_Price = listingq(Price=current)
+            New_Price.save()
 
     if request.method == 'POST':
         if "Comment" in request.POST:
