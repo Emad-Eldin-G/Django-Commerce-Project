@@ -1,5 +1,6 @@
 from contextlib import redirect_stderr
 from multiprocessing import context
+import re
 from unicodedata import category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -10,15 +11,16 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import User, Listing, Bid, Comment, Wishlist
 from .forms import ListingForm
+from django.utils.functional import SimpleLazyObject
 
 
 
 def index(request):
 
     Listings = Listing.objects.all().order_by('id').reverse()
-    
+
     context = {
-        "All_Listings": Listings
+        "All_Listings": Listings,
     }
 
 
@@ -81,11 +83,12 @@ def register(request):
 
 #___________________________________________________________________________
 
+
 @login_required(login_url='/login')
 def Listing_Page(request, listing):
     listingq = Listing.objects.get(Title=listing)
     userq = User.objects.get(username=request.user)
-    bidq = Bid.objects.filter(Listing=listingq)
+    commentsq = Comment.objects.filter(Listing=listingq)
 
     Title = listingq.Title
     Details = listingq.Details
@@ -95,25 +98,30 @@ def Listing_Page(request, listing):
 
     if request.method == 'POST':
         if "Wishlist" in request.POST:
-            wishlist = Wishlist(User=userq, Listing=listingq)
-            wishlist.save()
+            try:
+                wishlist = Wishlist(User=userq, Listing=listingq)
+                wishlist.save()
+            except:
+                return render(request, "auctions/Failed_wish.html")
+
             return render(request, "auctions/Success_wish.html")
 
-    if request.method == 'POST':
         if "Bid" in request.POST:
-            New_Bid = Bid(Listing=listingq, Previous_Bid=Price, Current_Bid=request.POST, Active=True)
+            bid = request.POST["Bid"]
+            New_Bid = Bid(Listing=listingq, Previous_Bid=Price, Current_Bid=bid, Active=True)
             New_Bid.save()
-            current = bidq.Current_Bid
-            New_Price = listingq(Price=current)
-            New_Price.save()
+            Listing.objects.filter(Title=listing).update(Price=bid)
 
-    if request.method == 'POST':
         if "Comment" in request.POST:
-            wishlist = Wishlist(User=userq, Listing=listingq)
-            wishlist.save()
-            return render(request, "auctions/Success_wish.html")
+            comment = request.POST["Comment"]
+            New_Comment = Comment(User=userq, Listing=listingq, Comment=comment)
+            New_Comment.save()
+            return HttpResponseRedirect(listing)
             
-
+        if "Close" in request.POST:
+            close = request.POST["Close"]
+            listingq.delete()
+            return render(request, "auctions/Closed.html")
 
     context = {
         "Title": Title,
@@ -121,12 +129,14 @@ def Listing_Page(request, listing):
         "Price": Price,
         "Category": Category,
         "Owner": Owner,
+        "Comments": commentsq
     }
 
     return render(request, "auctions/listing.html", context)
 
 #___________________________________________________________________________
 
+@login_required(login_url='/login')
 def new_listing(request):
 
     Current_User = request.user
@@ -135,10 +145,10 @@ def new_listing(request):
     if request.method == "POST":
         form = ListingForm(request.POST)
         if form.is_valid():
-            User = form.cleaned_data["User"]
-            Title = form.cleaned_data["Title"]
-            Details = form.cleaned_data["Details"]
-            Price = form.cleaned_data["Price"]
+            User     = form.cleaned_data["User"]
+            Title    = form.cleaned_data["Title"]
+            Details  = form.cleaned_data["Details"]
+            Price    = form.cleaned_data["Price"]
             Category = form.cleaned_data["Category"]
 
             form.save()

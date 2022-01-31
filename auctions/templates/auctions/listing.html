@@ -1,5 +1,4 @@
 {% extends "auctions/layout.html" %}
-{% load static %}
 
 
 {% block title %} {{Title}} {% endblock %}
@@ -11,9 +10,7 @@
 
     <h1>{{Title}}</h1>
 
-    <label for="h2">Opening Bid: </label>
-    <h2>{{Price}} USD</h2>
-    <p>{{Detials}}</p>
+    <h2>Opening Bid: {{Price}} USD</h2>
 
     {% if Category %}
     <h4>Category: {{Category}}</h4>
@@ -21,12 +18,14 @@
     <h2>Category: Not Defined</h2>
     {% endif %}
 
-
     {% if Owner %}
     <p>Owner: {{Owner}}</p>
     {% else %}
     <p>Owner: Anonymous</p>
     {% endif %}
+
+    
+    <p>{{Detials}}</p>
 
 </div>
 
@@ -34,8 +33,9 @@
 
     <form method="post">
         {% csrf_token %}
-        <input type="number" step="0.25" value="{{Price}}" name="Bid" min="{{Price}}">
         <h5>Current Bid: {{Current_Bid}}</h5>
+        <input type="number" step="0.25" value="{{Price}}" name="Bid" min="{{Price}}">
+        <small>The higher your Bid, the higher your winning chance</small>
     </form>
 
     <form method="post">
@@ -45,7 +45,23 @@
 
     <form method="post">
         {% csrf_token %}
-        <input type="submit" value="Comment" name="Comment">
+        <textarea name="Comment" id="Comment" cols="100" rows="3"></textarea>
+        <div>
+            <input type="submit" value="Comment">
+        </div>
+    </form>
+
+
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            {% if request.user == Owner %}
+            <input type="submit" value="Close" name="Close">
+            <div>
+            <small>-You can close this Bid now <br> and the last bidder will win</small>
+            </div>
+            {% endif %}
+        </div>
     </form>
 
 {% else %}
@@ -54,19 +70,14 @@
 
 {% endif %}
 
-
 {% for comment in Comments %}
-<div>
-    <ul>
-        <div>
-        <p>Owner: {{Commenter}}</p>
-        <p>{{comment}}</p>
-        </div>
-    </ul>
-</div>
+<ul>
+    <div>
+        <h6>{{comment.User}}</h6>
+        <p>{{comment.Comment}}</p>
+    </div>
+</ul>
 {% endfor %}
-
-
 
 {% endblock %}
 

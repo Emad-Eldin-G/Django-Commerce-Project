@@ -1,5 +1,5 @@
 {% extends "auctions/layout.html" %}
-{% load static %}
+
 
 {% block title %} 
 New Listing 
@@ -13,7 +13,7 @@ New Listing
 
     <div>
         <label for="">User:</label>
-        <input type="text" name="User" value="{{ user.username }}" readonly>
+        <input type="text" name="User" value="{{ user.username }}" >
     </div>
 
     <div>
@@ -27,8 +27,11 @@ New Listing
         <label for="">Details:</label>
         </div>
 
-        <textarea style="resize: none;" name="Details" cols="30" rows="10"></textarea>
+        <div style="display: flex">
+        <textarea style="resize: none; white-space: pre-wrap;" name="Details" cols="30" rows="10"></textarea>
+        </div>
     </div>
+
 
     <div>
         <label for="">Price:</label>
