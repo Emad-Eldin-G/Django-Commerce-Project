@@ -29,7 +29,7 @@ class Listing(models.Model):
 
 class Bid(models.Model):
     Listing      = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    Previous_Bid = models.FloatField(null=True)
+    User         = models.ForeignKey(User, on_delete=models.PROTECT)
     Current_Bid  = models.FloatField(null=True)
     Active       = models.BooleanField(null=True)
 

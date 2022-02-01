@@ -84,6 +84,10 @@ def register(request):
 #___________________________________________________________________________
 
 
+""" Presents the listing's data and accepts POST reqests 
+from buttons: Bid, Comment, Close, and WishList
+"""
+
 @login_required(login_url='/login')
 def Listing_Page(request, listing):
     listingq = Listing.objects.get(Title=listing)
@@ -98,17 +102,18 @@ def Listing_Page(request, listing):
 
     if request.method == 'POST':
         if "Wishlist" in request.POST:
-            try:
+            if Wishlist(User=userq, Listing=listingq) != None:
+                Wishlist.objects.filter(User=userq, Listing=listingq).delete()
+                return render(request, "auctions/Deleted_wish.html")
+                
+            elif Wishlist(User=userq, Listing=listingq) == None:
                 wishlist = Wishlist(User=userq, Listing=listingq)
                 wishlist.save()
-            except:
-                return render(request, "auctions/Failed_wish.html")
-
-            return render(request, "auctions/Success_wish.html")
+                return render(request, "auctions/Success_wish.html")
 
         if "Bid" in request.POST:
             bid = request.POST["Bid"]
-            New_Bid = Bid(Listing=listingq, Previous_Bid=Price, Current_Bid=bid, Active=True)
+            New_Bid = Bid(Listing=listingq, User=userq, Current_Bid=bid, Active=True)
             New_Bid.save()
             Listing.objects.filter(Title=listing).update(Price=bid)
 
@@ -145,12 +150,11 @@ def new_listing(request):
     if request.method == "POST":
         form = ListingForm(request.POST)
         if form.is_valid():
-            User     = form.cleaned_data["User"]
-            Title    = form.cleaned_data["Title"]
-            Details  = form.cleaned_data["Details"]
-            Price    = form.cleaned_data["Price"]
+            User  = form.cleaned_data["User"]
+            Title  = form.cleaned_data["Title"]
+            Details = form.cleaned_data["Details"]
+            Price = form.cleaned_data["Price"]
             Category = form.cleaned_data["Category"]
-
             form.save()
             return render(request, 'auctions/success_save.html')
 
