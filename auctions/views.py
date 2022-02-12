@@ -21,8 +21,6 @@ def index(request):
     context = {
         "All_Listings": Listings,
     }
-
-
     return render(request, "auctions/index.html", context)
 
 #___________________________________________________________________________
