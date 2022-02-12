@@ -1,6 +1,5 @@
 from contextlib import redirect_stderr
 from multiprocessing import context
-import re
 from unicodedata import category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
