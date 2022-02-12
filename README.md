@@ -1,3 +1,3 @@
 # Simple E-commerce like WebApp
-Made using Django and focusing on functionality - ignore aesthitics:) -                                                                                                              
+Made using Django focusing on functionality - ignore aesthitics:) -                                                                                                              
 (completed)
