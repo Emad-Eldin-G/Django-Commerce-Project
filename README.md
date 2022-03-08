@@ -1,3 +1,4 @@
 # Simple E-commerce like WebApp
-Made using Django focusing on functionality - ignore aesthitics:) -                                                                                                              
+Bidding System - WishList system - and User Authentication
+All using Python
 (completed)
