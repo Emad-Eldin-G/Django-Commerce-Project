@@ -13,6 +13,11 @@
     <h1>My WishList</h1>
     </div>
 
+    {% if not Listings %}
+    <div style="position: relative; top: 200px; display: inline-block; border-bottom: 7px solid #248bf8; box-shadow: 0.5px 5px 10px 5px lightgrey; ">
+    <h2 style="font-family:cursive">Nothing is here...</h2>
+    </div>
+    {% else %}
     <div>
         {% for listing in Listings %}
  
@@ -36,6 +41,7 @@
 
         {% endfor %}
     </div>
+    {% endif %}
 
 </div>
 

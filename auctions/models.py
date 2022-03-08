@@ -15,6 +15,10 @@ class Listing(models.Model):
         ('House', 'House'),
         ('Kitchen', 'Kitchen'),
         ('Sport', 'Sport'),
+        ('Cars', 'Cars'),
+        ('Health', 'Health'),
+        ('Food&Beverage', 'Food&Beverage'),
+        ('Fashion', 'Fashion'),
     ]
 
     User     = models.ForeignKey(User, on_delete=models.PROTECT)
