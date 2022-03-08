@@ -90,7 +90,6 @@ def Listing_Page(request, listing):
     listingq = Listing.objects.get(Title=listing)
     userq = User.objects.get(username=request.user)
     commentsq = Comment.objects.filter(Listing=listingq)
-    wishlistq = Wishlist.objects.get(User=userq, Listing=listingq)
 
     Title = listingq.Title
     Details = listingq.Details
@@ -100,17 +99,22 @@ def Listing_Page(request, listing):
 
     if request.method == 'POST':
         if "Wishlist" in request.POST:
-            if not wishlistq:
+            if not Wishlist.objects.filter(User=userq, Listing=listingq):
                wishlist = Wishlist(User=userq, Listing=listingq)
                wishlist.save()
-               return render(request, "auctions/Success_wish.html")   
+               return render(request, "auctions/Success_wish.html")
+
             else:
-               Wishlist.objects.filter(User=userq, Listing=listingq).delete()
-               return render(request, "auctions/Deleted_wish.html") 
+               return render(request, "auctions/AlreadyWish.html")
+
+        if "Remove" in request.POST:
+            Wishlist.objects.filter(User=userq, Listing=listingq).delete()
+            return render(request, "auctions/Deleted_Wish.html")
+
 
         if "Bid" in request.POST:
             bid = request.POST["Bid"]
-            New_Bid = Bid(Listing=listingq, User=userq, Current_Bid=bid, Active=True)
+            New_Bid = Bid(Listing=listingq, User=userq, Current_Bid=bid)
             New_Bid.save()
             Listing.objects.filter(Title=listing).update(Price=bid)
 
@@ -129,10 +133,11 @@ def Listing_Page(request, listing):
         "Title": Title,
         "Detials": Details,
         "Price": Price,
+        "MinPrice": Price + 0.25,
         "Category": Category,
         "Owner": Owner,
         "Comments": commentsq,
-        "Wish": Wishlist(User=userq, Listing=listingq),
+        "Wish": Wishlist.objects.filter(User=userq, Listing=listingq),
         "Lister": Listing.objects.get(Title=listing)
     }
 

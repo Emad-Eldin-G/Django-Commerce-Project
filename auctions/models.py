@@ -31,7 +31,6 @@ class Bid(models.Model):
     Listing      = models.ForeignKey(Listing, on_delete=models.CASCADE)
     User         = models.ForeignKey(User, on_delete=models.PROTECT)
     Current_Bid  = models.FloatField(null=True)
-    Active       = models.BooleanField(null=True)
 
     def __str__(self):
         return (f"{self.Listing} {self.Current_Bid}")
@@ -51,7 +50,7 @@ class Comment(models.Model):
 
 class Wishlist(models.Model):
     User    = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
-    Listing = models.ForeignKey(Listing, on_delete=models.PROTECT, unique=True)
+    Listing = models.ForeignKey(Listing, on_delete=models.CASCADE, unique=True)
 
     def __str__(self):
         return (f"{self.User} {self.Listing}")

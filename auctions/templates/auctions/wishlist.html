@@ -17,7 +17,7 @@
         {% for listing in Listings %}
  
          <ul style="list-style-type: none; display: inline-flex;">
-            <div style="margin: 10px; box-shadow: gray; background-color: white; border: 5px solid lavender; width: 350px; border-radius: 5px; height: 200px; position:sticky" id="index-child-div,">
+            <div style="margin: 10px; box-shadow: gray; background-color: white; border: 5px solid lavender; width: 350px; border-radius: 5px; height: 200px" id="index-child-div,">
 
                 <div style="margin: 5px; padding-right: 10px;">
                 <a href="{% url 'commerce:listing' listing.Listing %}"> <li> <h3>{{ listing.Listing }}</h3> </li> </a>
