@@ -7,57 +7,35 @@ New Listing
 
 {% block body %}
 
-<form action="{% url 'commerce:New' %}" method="POST">
+<h1 style="border-bottom: 5px solid #007bff; border-radius: 3px; display: inline-block; margin-bottom: 40px;">Sell Now</h1>
+<form action="{% url 'commerce:New' %}" method="POST" style="display: flexbox;">
 
     {% csrf_token %}
 
-    <div>
-        <label for="">User:</label>
+        <div style="margin-bottom: 20px;">
         <input type="text" name="User" value="{{ user.username }}" readonly>
-    </div>
-
-    <div>
-        <label for="">Title:</label>
-        <input type="text" name="Title">
-    </div>
-
-    <div>
-
-        <div>
-        <label for="">Details:</label>
+        <input type="text" name="Title" placeholder="Title">
+        <input type="number" name="Price" step="0.25" placeholder="Price" min="1">
         </div>
 
-        <div style="display: flex">
-        <textarea style="resize: none; white-space: pre-wrap;" name="Details" cols="30" rows="10"></textarea>
-        </div>
-    </div>
-
-
-    <div>
-        <label for="">Price:</label>
-        <input type="number" name="Price" step="0.25">
-    </div>
-
-    <div>
-        <div>
-        <label for="">Category</label>
-        </div>
-        <select name="Category" multiple=True>
+        <div style="margin-bottom: 20px;">
+        <select name="Category" multiple=True style="height: 110px; width: 350px;">
             <option value="Tech">Tech</option>
             <option value="House">House</option>
             <option value="Kitchen">Kitchen</option>
             <option value="Sport">Sport</option>
         </select>
-    </div>
+        </div>
 
-    
+        <div style="margin-bottom: 20px;">
+        <textarea style="resize: none; width: 100%;" name="Details" cols="30" rows="10" placeholder="Description"></textarea>
+        </div>
 
-    <div>
-      <input type="submit">
-    </div>
+        <div style="margin-bottom: 20px;">
+        <input type="submit" value="List Now" style="height: 50px; color: #007bff;">
+        </div>
 
 </form>
 
 {% endblock %}
-
 

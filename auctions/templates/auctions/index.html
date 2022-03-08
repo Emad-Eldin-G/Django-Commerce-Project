@@ -8,8 +8,8 @@
     {% for listing in All_Listings %}
 
        
-        <ul style="list-style-type: none;">
-            <div style="display: flex; margin: 10px; box-shadow: gray; background-color: white; border: 7px solid lavender; max-width: 700px; border-radius: 5px; height: 200px; position:sticky" id="index-child-div,">
+        <ul style="list-style-type: none; display: inline-flex;">
+            <div style="margin: 10px; box-shadow: gray; background-color: white; border: 5px solid lavender; width: 350px; border-radius: 5px; height: 200px; position:sticky" id="index-child-div,">
 
                 <div style="margin: 5px; padding-right: 10px;">
                 <a href="{% url 'commerce:listing' listing %}"> <li> <h3>{{ listing }}</h3> </li> </a>
@@ -19,7 +19,7 @@
                 <small> Owner: <strong>{{listing.User}}</strong> <br> Current Bid: <strong>{{listing.Price}}</strong> </small>
                 </div>
                 
-                <div style="text-align: left; position: relative; padding-left: 10%;">
+                <div style="text-align: left; position: relative;">
                 <small>Details: <br>{{listing.Details}}</small>
                 </div>
 

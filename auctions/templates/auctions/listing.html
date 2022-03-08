@@ -15,7 +15,7 @@
     {% if Category %}
     <h4>Category: {{Category}}</h4>
     {% else %}
-    <h2>Category: Not Defined</h2>
+    <h2>Category: Uncategorized</h2>
     {% endif %}
 
     {% if Owner %}
@@ -23,7 +23,7 @@
     {% else %}
     <p>Owner: Anonymous</p>
     {% endif %}
-
+    <hr style="margin-bottom: 80px;">
     
     <p>{{Detials}}</p>
 
@@ -35,20 +35,24 @@
         {% csrf_token %}
         <h5>Current Bid: {{Current_Bid}}</h5>
         <input type="number" step="0.25" value="{{Price}}" name="Bid" min="{{Price}}">
+        <br>
         <small>The higher your Bid, the higher your winning chance</small>
     </form>
 
     <form method="post">
         {% csrf_token %}
-        <input type="submit" value="Add WishList" name="Wishlist">
+        {% if Lister in Wish.listing %}
+        <input style="color: #007bff;" type="submit" value="Add WishList" name="Wishlist">
+        {% else %}
+        <input style="color: #007bff;" type="button" value="Already Wished">
+        {% endif %}
     </form>
 
     <form method="post">
         {% csrf_token %}
-        <textarea name="Comment" id="Comment" cols="100" rows="3"></textarea>
-        <div>
-            <input type="submit" value="Comment">
-        </div>
+            <textarea style="resize: none;" name="Comment" id="Comment" cols="100" rows="3"></textarea>
+            <br>
+            <input style="color: #007bff;" type="submit" value="Comment">
     </form>
 
 
@@ -71,10 +75,12 @@
 {% endif %}
 
 {% for comment in Comments %}
-<ul>
-    <div>
-        <h6>{{comment.User}}</h6>
+<ul style="position:relative; padding-bottom: 50px; margin-bottom: 60px; margin-top: 50px;">
+
+    <div style="position:absolute; left: 0%; border: solid 3px #007bff; padding: 4px; min-width: 300px; border-radius: 3px;">
+        <h6 style="margin-right: 100%;">{{comment.User}}:</h6>
         <p>{{comment.Comment}}</p>
+
     </div>
 </ul>
 {% endfor %}

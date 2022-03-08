@@ -15,9 +15,25 @@
 
     <div>
         {% for listing in Listings %}
-        <ul>
-            <a href="{% url 'commerce:listing' listing.Listing %}"> <li>{{ listing.Listing }}</li> </a>
+ 
+         <ul style="list-style-type: none; display: inline-flex;">
+            <div style="margin: 10px; box-shadow: gray; background-color: white; border: 5px solid lavender; width: 350px; border-radius: 5px; height: 200px; position:sticky" id="index-child-div,">
+
+                <div style="margin: 5px; padding-right: 10px;">
+                <a href="{% url 'commerce:listing' listing.Listing %}"> <li> <h3>{{ listing.Listing }}</h3> </li> </a>
+                </div>
+                
+                <div style="text-align: left; position: relative;">
+                <small> Owner: <strong>{{listing.Listing.User}}</strong> <br> Current Bid: <strong>{{listing.Listing.Price}}</strong> </small>
+                </div>
+                
+                <div style="text-align: left; position: relative;">
+                <small>Details: <br>{{listing.Listing.Details}}</small>
+                </div>
+
+            </div>
         </ul>
+
         {% endfor %}
     </div>
 
