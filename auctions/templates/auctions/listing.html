@@ -41,7 +41,7 @@
         <small>The higher your Bid, the higher your winning chance</small>
     </form>
 
-    <form method="post">
+    <form method="post" style="margin: 15px;">
         {% csrf_token %}
         {% if not Wish %}
         <input style="color: #007bff;" type="submit" value="Add Wish" name="Wishlist">
@@ -52,13 +52,13 @@
 
     <form method="post">
         {% csrf_token %}
-            <textarea style="resize: none;" name="Comment" id="Comment" cols="100" rows="3"></textarea>
+            <textarea style="resize: none; margin: 15px;" name="Comment" id="Comment" cols="100" rows="3"></textarea>
             <br>
             <input style="color: #007bff;" type="submit" value="Comment">
     </form>
 
 
-    <form method="post">
+    <form method="post" style="margin: 15px;">
         {% csrf_token %}
         <div>
             {% if request.user == Owner %}

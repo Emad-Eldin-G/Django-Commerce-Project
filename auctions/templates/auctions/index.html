@@ -9,7 +9,7 @@
 
        
         <ul style="list-style-type: none; display: inline-flex;">
-            <div style="margin: 10px; box-shadow: gray; background-color: white; border: 5px solid lavender; width: 350px; border-radius: 5px; height: 200px; position:sticky" id="index-child-div,">
+            <div style="margin: 10px; box-shadow: gray; background-color: white; border: 5px solid lavender; width: 350px; border-radius: 5px; height: 300px; position:sticky" id="index-child-div,">
 
                 <div style="margin: 5px; padding-right: 10px;">
                 <a href="{% url 'commerce:listing' listing %}"> <li> <h3>{{ listing }}</h3> </li> </a>
@@ -22,6 +22,7 @@
                 <div style="text-align: left; position: relative;">
                 <small>Details: <br>{{listing.Details}}</small>
                 </div>
+
 
             </div>
         </ul>

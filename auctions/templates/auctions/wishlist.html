@@ -9,12 +9,10 @@
 
 <div>
 
-    <div>
     <h1>My WishList</h1>
-    </div>
 
     {% if not Listings %}
-    <div style="position: relative; top: 200px; display: inline-block; border-bottom: 7px solid #248bf8; box-shadow: 0.5px 5px 10px 5px lightgrey; ">
+    <div style="position: relative; display: inline-flex; border-bottom: 7px solid #248bf8; box-shadow: 0.5px 5px 10px 5px lightgrey; top: 100px;">
     <h2 style="font-family:cursive">Nothing is here...</h2>
     </div>
     {% else %}
@@ -24,15 +22,15 @@
          <ul style="list-style-type: none; display: inline-flex;">
             <div style="margin: 10px; box-shadow: gray; background-color: white; border: 5px solid lavender; width: 350px; border-radius: 5px; height: 200px" id="index-child-div,">
 
-                <div style="margin: 5px; padding-right: 10px;">
+                <div style="margin: 5px;">
                 <a href="{% url 'commerce:listing' listing.Listing %}"> <li> <h3>{{ listing.Listing }}</h3> </li> </a>
                 </div>
                 
-                <div style="text-align: left; position: relative;">
+                <div style="text-align: left">
                 <small> Owner: <strong>{{listing.Listing.User}}</strong> <br> Current Bid: <strong>{{listing.Listing.Price}}</strong> </small>
                 </div>
                 
-                <div style="text-align: left; position: relative;">
+                <div style="text-align: left">
                 <small>Details: <br>{{listing.Listing.Details}}</small>
                 </div>
 
