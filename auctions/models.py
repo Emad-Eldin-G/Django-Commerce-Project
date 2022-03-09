@@ -1,5 +1,4 @@
 from distutils.command.upload import upload
-from operator import truediv
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -23,6 +22,7 @@ class Listing(models.Model):
 
     User     = models.ForeignKey(User, on_delete=models.PROTECT)
     Title    = models.CharField(max_length=50)
+    Image    = models.ImageField(upload_to = 'auctions/static/media')
     Details  = models.TextField(blank=True)
     Price    = models.FloatField()
     Category = models.CharField(max_length=20, choices=Categories, null=True, blank=True)
@@ -53,8 +53,8 @@ class Comment(models.Model):
 
 
 class Wishlist(models.Model):
-    User    = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
-    Listing = models.ForeignKey(Listing, on_delete=models.CASCADE, unique=True)
+    User    = models.ForeignKey(User, on_delete=models.CASCADE)
+    Listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
 
     def __str__(self):
         return (f"{self.User} {self.Listing}")

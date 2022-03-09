@@ -92,6 +92,7 @@ def Listing_Page(request, listing):
     commentsq = Comment.objects.filter(Listing=listingq)
 
     Title = listingq.Title
+    Image = listingq.Image
     Details = listingq.Details
     Price = listingq.Price
     Category = listingq.Category
@@ -129,6 +130,19 @@ def Listing_Page(request, listing):
             listingq.delete()
             return render(request, "auctions/Closed.html")
 
+        if "Edit" in request.POST:
+            context = {
+                'Title': listingq.Title,
+                'Image': listingq.Image,
+                'Details': listingq.Details,
+                'Price': listingq.Price,
+                'Category': listingq.Category,
+                'Owner': listingq.User,
+            }
+            return render(request, "auctions/Edit.html")
+
+
+
     context = {
         "Title": Title,
         "Detials": Details,
@@ -138,7 +152,7 @@ def Listing_Page(request, listing):
         "Owner": Owner,
         "Comments": commentsq,
         "Wish": Wishlist.objects.filter(User=userq, Listing=listingq),
-        "Lister": Listing.objects.get(Title=listing)
+        "Image": Image
     }
 
     return render(request, "auctions/listing.html", context)
@@ -147,23 +161,18 @@ def Listing_Page(request, listing):
 
 @login_required(login_url='/login')
 def new_listing(request):
-
-    Current_User = request.user
-    form = ListingForm()
-
-    if request.method == "POST":
-        form = ListingForm(request.POST)
-        if form.is_valid():
-            form = ListingForm(request.POST)
-            User  = form.cleaned_data["User"]
-            Title  = form.cleaned_data["Title"]
-            Details = form.cleaned_data["Details"]
-            Price = form.cleaned_data["Price"]
-            Category = form.cleaned_data["Category"]
-            form.save(User, Title, Details, Price, Category)
-            return render(request, 'auctions/success_save.html')
-
     
+    current = User.objects.get(username=request.user)
+    if request.method == "POST":
+        Title  = request.POST["Title"]
+        Image = request.POST["Image"]
+        Details = request.POST["Details"]
+        Price = request.POST["Price"]
+        Category = request.POST["Category"]
+        form = Listing(User=current, Title=Title, Image=Image, Details=Details, Price=Price, Category=Category)
+        form.save()
+        return render(request, 'auctions/success_save.html')
+
     return render(request, 'auctions/new.html')
 
 #___________________________________________________________________________
