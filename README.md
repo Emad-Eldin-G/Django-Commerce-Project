@@ -1,5 +1,11 @@
-# Simple E-commerce like WebApp
-Bidding System - WishList system - and User Authentication
+# Simple E-commerce like WebApp  
+
+## Features
+- Posting new listings for your product (with image support)
+- A wishlist system to add favourite listings
+- Comments on each listing page 
+- User Authentication (Login, register, etc)  
+  
 
 Hosted on Heroku (soon)
 
