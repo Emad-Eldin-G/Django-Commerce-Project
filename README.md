@@ -7,6 +7,5 @@
 - User Authentication (Login, register, etc)  
   
 
-Hosted on Heroku (soon)
-
+Hosted on Render 
 (completed)
