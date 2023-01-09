@@ -1,6 +1,8 @@
 # Simple E-commerce like WebApp 
 > Created using Django template language 
 
+<img src='https://github.com/Emad-Eldin-G/Django-Commerce-Project/blob/master/thumbnail.png' width=500>
+
 ## Features
 - Post new listings for your product (with image support)
 - A wishlist system to add favourite listings
